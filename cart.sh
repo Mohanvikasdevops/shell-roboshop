@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cartID=$(id -u)
+USERID=$(id -u)
 LOGS_FOLDER="/var/log/shell-roboshop"
 LOGS_FILE="$LOGS_FOLDER/$0.log"
 R="\e[31m"
@@ -9,12 +9,12 @@ Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.109v.store
-cart_HOST=cart.109v.store
+USER_HOST=user.109v.store
 REDIS_HOST=redis.109v.store
 CATALOGUE_HOST=catalogue.109v.store
 
-if [ $cartID -ne 0 ]; then
-    echo -e "$R Please run this script wiht root cart access $N" | tee -a $LOGS_FILE
+if [ $USERID -ne 0 ]; then
+    echo -e "$R Please run this script wiht root user access $N" | tee -a $LOGS_FILE
     exit 1
 fi
 
@@ -40,16 +40,16 @@ VALIDATE $? "Installing NodeJs"
 
 id roboshop &>>$LOGS_FILE
 if [ $? -ne 0 ]; then   
-    cartadd --system --home /app --shell /sbin/nologin --comment "roboshop system cart" roboshop &>>$LOGS_FILE
-    VALIDATE $? "Creating system cart"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
+    VALIDATE $? "Creating system user"
 else
-    echo -e "Roboshop cart already exist .... $Y SKIPPING $N"
+    echo -e "Roboshop user already exist .... $Y SKIPPING $N"
 fi
 
 mkdir -p /app 
 VALIDATE $? "Creatng app directory"
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOGS_FILE
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOGS_FILE
 VALIDATE $? "Downloading cart Code"
 
 cd /app
