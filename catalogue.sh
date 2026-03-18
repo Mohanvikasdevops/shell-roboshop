@@ -48,19 +48,19 @@ curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue
 VALIDATE $? "Downloading Catalogue Code"
 
 cd /app
-VALIDATE $? "Moving to app directory"
+VALIDATE $? "Moving to app directory" 
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>$LOGS_FILE
 VALIDATE $? "Unzip catalogue code"
 
-npm install
+npm install &>>$LOGS_FILE
 VALIDATE $? "Installing dependencies"
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp catalogue.service /etc/systemd/system/catalogue.service &>>$LOGS_FILE
 VALIDATE $? "Created systemctl service"
 
 systemctl daemon-reload
-systemctl enable catalogue 
+systemctl enable catalogue &>>$LOGS_FILE
 systemctl start catalogue
 VALIDATE $? "Starting and enabling catalogue"
 
