@@ -41,9 +41,6 @@ else
     echo -e "Roboshop user already exist .... $Y SKIPPING $N"
 fi
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
-VALIDATE $? "Creating system User"
-
 mkdir -p /app 
 VALIDATE $? "Creatng app directory"
 
