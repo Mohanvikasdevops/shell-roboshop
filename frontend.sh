@@ -31,6 +31,14 @@ dnf module enable nginx:1.24 -y
 dnf install nginx -y &>>$LOGS_FILE
 VALIDATE $? "Installing nginx"
 
+id roboshop &>>$LOGS_FILE
+if [ $? -ne 0 ]; then   
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOGS_FILE
+    VALIDATE $? "Creating system user"
+else
+    echo -e "Roboshop user already exist .... $Y SKIPPING $N"
+fi
+
 systemctl enable nginx &>>$LOGS_FILE
 systemctl start nginx
 VALIDATE $? "Starting and enabling nginx"
