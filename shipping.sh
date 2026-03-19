@@ -9,8 +9,9 @@ Y="\e[33m"
 N="\e[0m"
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.109v.store
-shipping_HOST=shipping.109v.store
+SHIPPING_HOST=shipping.109v.store
 MYSQL_HOST=mysql.109v.store
+CART_HOST=cart.109v.store
 
 if [ $USERID -ne 0 ]; then
     echo -e "$R Please run this script wiht root user access $N" | tee -a $LOGS_FILE
