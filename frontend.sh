@@ -50,10 +50,10 @@ VALIDATE $? "Unzip frontend code"
 rm -rf /etc/nginx/nginx.conf  &>>$LOGS_FILE
 VALIDATE $? "Removing existing code"
 
-cp $SCRIPT_DIR/nginx.conf /etc/systemd/system/nginx.conf &>>$LOGS_FILE
-VALIDATE $? "Created systemctl service"
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOGS_FILE
+VALIDATE $? "Copied our nginx conf file"
 
-systemctl restart nginx 
+systemctl restart nginx &>>$LOGS_FILE
 VALIDATE $? "Restarted nginx"
 
 
